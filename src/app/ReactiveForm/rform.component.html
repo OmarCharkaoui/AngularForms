@@ -1,0 +1,165 @@
+<div class="container">
+    <h1 class=" text-center "> Reactive Forms </h1>
+    <hr>
+    <div class="row">
+        <div class="col-md-8">
+            <form [formGroup]="reactiveForm" >
+                <div class="form-group row">
+                    <div class="col-md-2">
+                        <label for="frtName" class="col-form-label">First Name </label>
+                    </div>
+                    <div class="col-md-10">
+                        <input formControlName="firstName" id="frtName"  placeholder="Enter First Name"
+                        [ngClass]="{
+                            'form-control': true , 
+                            'is-invalid': !firstName?.valid && firstName?.touched,
+                            'is-valid': firstName?.valid
+                           }"
+                        
+                        />
+                        <small *ngIf="firstName.errors?.required && firstName.touched"  
+                        class="form-text  text-danger" >Field is required</small>
+                        <small
+                        *ngIf="firstName.errors?.minlength && firstName.touched" 
+                        class="form-text  text-danger" >First Name required Length atleast
+                        {{firstName?.errors?.minlength?.requiredLength}} Characters </small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-2">
+                        <label for="lstName" class="col-form-label">Last Name </label>
+                    </div>
+                    <div class="col-md-10">
+                        <input formControlName="lastName" id="lstName" 
+                        placeholder="Enter Last Name"
+                        [ngClass]="{
+                            'form-control': true, 
+                            'is-invalid': !lastName?.valid && lastName?.touched,
+                            'is-valid': lastName?.valid
+                           }"
+                        />
+                        <small *ngIf="lastName.errors?.required && lastName.touched" class="form-text text-danger">Field is required</small>
+                        <small
+                        *ngIf="lastName.errors?.minlength && lastName.touched" 
+                        class="form-text  text-danger" >Last Name required Length atleast
+                        {{lastName?.errors?.minlength?.requiredLength}} Characters </small>
+                    </div>
+                </div>
+                <hr>
+            <div>
+                <div class="form-group row"  >
+                    <div class="col-md-2  ">
+                        <label>Gender</label>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="form-check">
+                            <label for="Male" >
+                     <input formControlName="gender"  type="radio" id="Male" value="male" 
+                     [ngClass]="{'form-check-input':true,
+                                'is-invalid': !gender?.valid && gender?.touched,
+                                'is-valid': gender?.valid
+                                    }"
+                     
+                     > Male </label>
+                        </div>
+                        <div class="form-check">
+                            <label for="female" >
+                            <input formControlName="gender" type="radio" id="female" value="female"
+                            [ngClass]="{'form-check-input':true,
+                                'is-invalid': !gender?.valid && gender?.touched,
+                                'is-valid': gender?.valid
+                                    }"
+                            > Female
+                            </label>
+                        </div>
+                        <small *ngIf="gender?.errors?.required && gender?.touched" class="form-text text-danger">Pick one option.</small>
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-2   ">
+                        <label for="straddress" class="col-form-label">Street Address </label>
+                    </div>
+                    <div class="col-md-10">
+                        <input  id="straddress" formControlName="streetAddress" placeholder="Enter Street Address"
+                        [ngClass]="{'form-control':true,
+                        'is-invalid': !streetAddress?.valid && streetAddress?.touched,
+                        'is-valid': streetAddress?.valid
+                            }"
+                        />
+                        <small *ngIf="streetAddress?.errors?.required && streetAddress?.touched" class="form-text text-danger">Field is required</small>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-2   ">
+                        <label for="Country" class="col-form-label">Country </label>
+                    </div>
+                    <div class="col-md-10">
+                        <select 
+                        [ngClass]="{'form-control':true,
+                        'is-invalid': !country?.valid && country?.touched && country?.value ==='' ,
+                        'is-valid': country?.valid && country?.touched  && country?.value !=''
+                            }"
+                        id="Country" formControlName="country" >
+                            <option [ngValue]="null" selected>Choose...</option>
+                            <option value="1" >Morocco</option>
+                            <option value="2" >USA</option>
+                        </select>
+                        <small *ngIf="country?.errors?.required && country?.touched"  class="form-text text-danger"   >Field is required</small>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-2   ">
+                        <label for="city" class="col-form-label">City </label>
+                    </div>
+                    <div class="col-md-10">
+                        <input formControlName="city"  id="city" placeholder="Enter City"
+                        [ngClass]="{
+                            'form-control': true, 
+                            'is-invalid': !city?.valid && city?.touched,
+                            'is-valid': city?.valid
+                           }"
+                        />
+                        <small *ngIf="city?.errors?.required && city?.touched" class="form-text text-danger">Field is required</small>
+                    </div>
+                </div>
+</div>
+
+                <button class="btn btn-primary" type="submit" [disabled]="!reactiveForm.valid" (click)="Submit()" > Submit</button>
+
+            </form>
+        </div>
+
+        <!-- frName;
+ lsName;
+ gende;
+ streetA;
+ coutry;
+ cit; -->
+        <div class="col">
+            <h4 class="text-center" >Result</h4>
+        <div *ngIf="pressedBtn" >
+            <p>first Name : {{frName}}  </p>
+            <p>Last Name : {{lsName}}  </p>
+            <p>Gender : {{gende}}  </p>
+            <p>Street Address : {{streetA}}  </p>
+            <p>Country : {{coutry }}  </p>
+            <p>City : {{cit}}  </p>
+        </div>
+        </div>
+
+    </div>
+    <hr>
+<!--  -->
+    <!-- <div class="m-5">
+            
+                <ul class="list-group" style="width: 400px;">
+                        <h4 >Keys : </h4>
+                        <li class="list-group-item font-weight-bold ">ngForm</li>
+                        <li class="list-group-item font-weight-bold">ngModel - Form Control Instance </li>
+                        <li class="list-group-item font-weight-bold">ngModelGroup</li>
+                        <li class="list-group-item font-weight-bold">Two Way Binding</li>
+                      </ul>
+        </div> -->
+</div>
